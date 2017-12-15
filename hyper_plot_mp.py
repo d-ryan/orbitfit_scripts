@@ -1,19 +1,27 @@
+import numpy as np
+
+#Ensure machines without displays can still render & save figures
 import matplotlib
 matplotlib.use('Cairo')
 import matplotlib.pyplot as plt
-import numpy as np
+
+#For plotting
 from matplotlib.ticker import MaxNLocator
 from corner import corner
-import pdb
+
+#Need Kepler's eqn solver
 from ema_hyper import ema
+
 #For convergence checking
 from grstat import gr
 from chainplot import chainplot
 
+#Useful to have for debugging
+import pdb
 
+#Date conversions
 import jdcal as jdcal
-import datetime as dt
-#############################################
+import datetime as dtt
 
 #Convert errors from x/y space to sep/PA space
 def sigs_xy2sigs_pa(xy,sigs):

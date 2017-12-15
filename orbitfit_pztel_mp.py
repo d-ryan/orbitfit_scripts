@@ -10,27 +10,12 @@ import pdb
 #from orbitclass import orbit
 import matplotlib.pyplot as plt
 import pickle as pickle 
-from etest import ema
 
-'''when switching stars, change:
---priors
---save filename
---astrometry filename
---walker locations
---constants file import, here AND in koe
---chain thinning, if desired
-'''
-#tau_max=jdcal.gcal2jd(date.today().year,date.today().month,date.today().day)[1]
-#years=100
-#tau_min=tau_max-years*365.2425
+#Can still use hyperbolic Kepler's eqn solver here, since behavior is identical for e<1.
+from ema_hyper import ema
 
 savename='/big_scr7/dryan/pztelmc/pztel_mass_reproc1'
 
-'''
-eritest2 - linear prior, short
-eritest3 - flat prior, short
-eritest4 - flat prior, long
-'''
 parallax,distance,mstar,kgauss, AU, DAY = constants()
 
 

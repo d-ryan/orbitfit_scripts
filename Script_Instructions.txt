@@ -1,5 +1,11 @@
 -----README FILE-----
 
+Contents:
+Line 3 --- Contents
+Line --- About the Scripts
+Line --- Running the Scripts
+Line --- Generating Plots
+
 This file describes the usage of several python scripts for fitting orbits to
 astrometry via MCMC, and plotting the posterior distributions of orbital
 parameters which result. Basic knowledge of MCMC and Keplerian orbits is assumed.
@@ -29,10 +35,50 @@ Orbit plotting:
 10. kepler_plot_mp_q.py :  Same as above, but converts a->q for direct comparison
                            with the hyperbolic and cartesian results.
 
+Utility:
+11. cart_to_kepler.py
+12. ema_hyper.py
+13. grstat.py
+14. chainplot.py
+15. koe_hyper_agnostic.py
+16. RK4_energy.py
+
+
 The methods all involve 8 fit parameters. The first 6 parameters vary between
 scripts. The final 2 parameters are consistent between all scripts; these
 shared parameters are the total system mass ("M" or "mass") in solar masses
 and the parallax of the system ("parallax" or "para") in arcseconds.
+
+Parameters which are NOT shared are:
+Cartesian fitter: x,y,z,vx,vy,vz : 3D position and velocity components
+Elliptical fitter: a,tau,argp,lan,inc,ecc
+Hyperbolic fitter: q,tau,argp,lan,inc,ecc
+The elliptical and hyperbolic fitters use 5 identical parameters. "tau" is the epoch
+of periastron, "argp" is the argument of periastron, "lan" is the longitude of the
+ascending node, "inc" is the inclination, and "ecc" is the eccentricity.
+
+In all fitters, the coordinate system is right-handed, with the x-y plane
+corresponding to the plane of the sky. The positive x-axis points east, in the
+direction of increasing right ascension. The positive y-axis points north, in the
+direction of increasing declination. To complete the right-handed coordinate system,
+the positive z-axis points directly into the plane of the sky, away from the Earth.
+
+The angles represented by the longitude of the ascending node, the inclination, and
+the argument of periastron, in order, represent LEFT-HANDED rotations from the sky
+plane into the orbital plane. The longitude of the ascending node is a rotation from
+the positive y-axis toward the positive x-axis, with the z-axis as the rotation axis.
+The inclination is a rotation about the line of nodes (the rotated y-axis), from the
+positive x'-axis (the rotated x-axis) toward the positive z/z' axis. (To check this,
+remember that the orbit crosses from -z to +z at the ascending node, and that the
+planet's motion is counterclockwise as observed from earth for i<90 degrees and
+clockwise for i>90 degrees.) The last angle, the argument of periastron, rotates
+the coordinate system about the z''-axis, with the rotation moving from the line of
+nodes (the y'/y''-axis) toward the x''-axis.
+
+(These angles are considered "left-handed" since the traditional right-handed definition
+of the Cartesian plane involves an x-axis pointing right, a y-axis pointing up, and 
+rotations from +x CCW through the first quadrant toward +y. These angles reverse that,
+going CCW from +y to +x, then from +x' to +z', and again from +y'' to +x''.)
 
 Orbit fitting functions run for a specified number of steps, saving their progress
 in numerous files as they proceed (preventing significant loss of progress if a
@@ -157,4 +203,4 @@ Plots generated should include:
 --Residuals of the maximum-likelihood orbit, in x/y and sep/PA space.
     Suffix: _resid or _resid_seppa
 --Visualizations of the chains wandering through the parameter space, for convergence-checking.
-    Suffix: 
+    Suffix: paramNchains where N = index of MCMC parameter, from 0 to 7
